@@ -1,11 +1,11 @@
 Package: riot
-Title: Package for functions related to input-output tables (IOTs)
+Title: A Package for functions related to input-output tables (IOTs)
 Version: 0.0.1
 Authors@R: person("Oliver", "Reiter", email = "reiter@wiiw.ac.at", role = c("aut", "cre"))
 Description: Contains some functions that could be used in the context of input-output tables, such as the GRAS algorithm for updating matrizes.
 Depends:
     R (>= 3.3.1)
-License: GPL-2
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
