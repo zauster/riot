@@ -85,6 +85,8 @@ doGRAS <- function(A, u, v, epsilon = 1e-10,
     r <- as.vector(r)
     s <- as.vector(s)
 
-    X <- diag(r) %*% P %*% diag(s) - diag(inv(r)) %*% N %*% diag(inv(s))
+    ## X.1 <- diag(r) %*% P %*% diag(s) - diag(inv(r)) %*% N %*% diag(inv(s))
+    X <- sweep(r * P, 2, s, "*") - sweep(inv(r) * N, 2, inv(s), "*")
+    
     return(X)
 }

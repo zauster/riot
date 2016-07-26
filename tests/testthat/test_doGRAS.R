@@ -1,5 +1,5 @@
 
-context("Test GRAS algorithm")
+context("Testing GRAS algorithm")
 
 A <- matrix(c(7, 3, 5, -3, 2, 9, 8, 0, -2, 0, 2, 0),
             ncol = 4, nrow = 3, byrow = TRUE)
