@@ -7,6 +7,7 @@
 #' @param u vector with the row totals
 #' @param v vector with the column totals
 #' @param epsilon the error tolerance level, default is 1e-10.
+#' @param maxiter maximum number of iterations, default is 10000.
 #' @param verbose should some information of the iterations be
 #'     displayed? Default is FALSE
 #' @return the updated matrix X
@@ -14,8 +15,10 @@
 #' @references Junius T. and J. Oosterhaven (2003), The solution of
 #'     updating or regionalizing a matrix with both positive and
 #'     negative entries, Economic Systems Research, 15, pp. 87-96.
+#' 
 #'     Lenzen M., R. Wood and B. Gallego (2007), Some comments on the
 #'     GRAS method, Economic Systems Research, 19, pp. 461-465.
+#' 
 #'     Temurshoev, U., R.E. Miller and M.C. Bouwmeester (2013), A note
 #'     on the GRAS method, Economic Systems Research, 25, pp. 361-367.
 #' @keywords gras, matrix updating
@@ -27,10 +30,9 @@
 #' v <- c(9, 16, 17, -2)
 #' doGRAS(A, u, v)
 #' @export
-doGRAS <- function(A, u, v, epsilon = 1e-10,
+doGRAS <- function(A, u, v,
+                   epsilon = 1e-10, max.iter = 10000,
                    verbose = FALSE) {
-
-    epsilon <- 1e-6
 
     ## get col/row numbers
     m <- nrow(A)
@@ -48,12 +50,9 @@ doGRAS <- function(A, u, v, epsilon = 1e-10,
     error <- 1
     iter <- 1
 
-    while(error > epsilon) {
+    while((error > epsilon) & (iter <= max.iter)) {
 
         s.old <- s
-        if(verbose) {
-            message("iter: ", iter)
-            }
 
         ##
         ## calculate multiplicator s
@@ -77,10 +76,21 @@ doGRAS <- function(A, u, v, epsilon = 1e-10,
 
         ##
         ## calculate the remaining error
-        error <- max(abs(s.old - s))
+        diff <- abs(s.old - s)
+        error <- max(diff)
+        error.pos <- which.max(diff)
 
+        if(verbose) {
+            message("iter: ", iter, "  -> error: ", error, " at ", error.pos)
+            }
+        
         iter <- iter + 1
     }
+
+    if(verbose) {
+        message(" => Iterations needed: ", iter - 1)
+        message(" => Resulting error: ", error, " at ", error.pos)
+        }
 
     r <- as.vector(r)
     s <- as.vector(s)
