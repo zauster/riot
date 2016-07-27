@@ -4,7 +4,7 @@
 \alias{doGRAS}
 \title{Do the GRAS algorithm for updating matrizes}
 \usage{
-doGRAS(A, u, v, epsilon = 0.0000000001, verbose = FALSE)
+doGRAS(A, u, v, epsilon = 0.0000000001, max.iter = 10000, verbose = FALSE)
 }
 \arguments{
 \item{A}{the "base" matrix}
@@ -17,6 +17,8 @@ doGRAS(A, u, v, epsilon = 0.0000000001, verbose = FALSE)
 
 \item{verbose}{should some information of the iterations be
 displayed? Default is FALSE}
+
+\item{maxiter}{maximum number of iterations, default is 10000.}
 }
 \value{
 the updated matrix X
@@ -41,8 +43,10 @@ Oliver Reiter
 Junius T. and J. Oosterhaven (2003), The solution of
     updating or regionalizing a matrix with both positive and
     negative entries, Economic Systems Research, 15, pp. 87-96.
+
     Lenzen M., R. Wood and B. Gallego (2007), Some comments on the
     GRAS method, Economic Systems Research, 19, pp. 461-465.
+
     Temurshoev, U., R.E. Miller and M.C. Bouwmeester (2013), A note
     on the GRAS method, Economic Systems Research, 25, pp. 361-367.
 }
