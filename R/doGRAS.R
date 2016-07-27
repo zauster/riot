@@ -7,7 +7,7 @@
 #' @param u vector with the row totals
 #' @param v vector with the column totals
 #' @param epsilon the error tolerance level, default is 1e-10.
-#' @param maxiter maximum number of iterations, default is 10000.
+#' @param max.iter maximum number of iterations, default is 10000.
 #' @param verbose should some information of the iterations be
 #'     displayed? Default is FALSE
 #' @return the updated matrix X
@@ -31,7 +31,8 @@
 #' doGRAS(A, u, v)
 #' @export
 doGRAS <- function(A, u, v,
-                   epsilon = 1e-10, max.iter = 10000,
+                   epsilon = 1e-10,
+                   max.iter = 10000,
                    verbose = FALSE) {
 
     ## get col/row numbers

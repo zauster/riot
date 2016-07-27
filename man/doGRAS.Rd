@@ -15,10 +15,10 @@ doGRAS(A, u, v, epsilon = 0.0000000001, max.iter = 10000, verbose = FALSE)
 
 \item{epsilon}{the error tolerance level, default is 1e-10.}
 
+\item{max.iter}{maximum number of iterations, default is 10000.}
+
 \item{verbose}{should some information of the iterations be
 displayed? Default is FALSE}
-
-\item{maxiter}{maximum number of iterations, default is 10000.}
 }
 \value{
 the updated matrix X
