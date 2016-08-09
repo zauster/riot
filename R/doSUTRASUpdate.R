@@ -141,6 +141,9 @@ doSUTRASUpdate <- function(lst, epsilon = NULL, ## 0.0000005,
         Ud <- rd * t(t(Pd0) * su) - inv(rd) * t(t(Nd0) * inv(su))
         Um <- rm * t(t(Pm0) * su) - inv(rm) * t(t(Nm0) * inv(su))
 
+        ## m vector
+        m <- M * (m0 * inv(rm))
+
         ## doSUTRAS until here <====
 
         ## and Udb and Umb
@@ -166,8 +169,6 @@ doSUTRASUpdate <- function(lst, epsilon = NULL, ## 0.0000005,
         Udb <- Ud - TTMmatrix.domestic - TLSmatrix.domestic
         Umb <- Um - TTMmatrix.import - TLSmatrix.import
 
-        ## m vector
-        m <- r * (m0 * inv(rm))
 
         updatedSUTs <- list(V = V,
                             Ud = Ud, Um = Um,

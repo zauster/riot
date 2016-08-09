@@ -1,10 +1,45 @@
-
-doSUTRAS.DomImp <- function(Pv0, Nv0,
-                            Pd0, Nd0,
-                            Pm0, Nm0,
+#' do a SUTRAS update 
+#'
+#' do a SUTRAS update when the use table is separated in domestic and
+#' imported products. Row and column totals are met.
+#' @param V the supply matrix
+#' @param Ud the domestic use matrix
+#' @param Um the import use matrix
+#' @param m0 the import vector (as normally included in the supply
+#'     matrix)
+#' @param ubar intermediate consumption by industry sector
+#' @param xbar gross output by industry sector
+#' @param M total imports
+#' @param c0 the absolute (negative) values of the trade margins
+#'     vector, see references for details.
+#' @param epsilon the convergence tolerance, default = 1e-6.
+#' @param max.iterations the maximal number of iterations that would
+#'     be carried out
+#' @param verbose should diagnostic output of the iterations be
+#'     displayed? Default = FALSE.
+doSUTRAS.DomImp <- function(V, Ud, Um, m0,
                             ubar, xbar,
-                            M, m0, c0,
-                            epsilon) {
+                            M, c0,
+                            epsilon = 1e-6,
+                            max.iterations = 10000, 
+                            verbose = FALSE) {
+
+    ## 
+    ## separate positive from negative entries
+    ## V (make matrix)
+    positiveV <- V >= 0
+    Pv0 <- V * positiveV
+    Nv0 <- abs(V * !positiveV)
+
+    ## U matrices, Use table
+    positiveUd <- Ud >= 0
+    Pd0 <- Ud * positiveUd
+    Nd0 <- abs(Ud * !positiveUd)
+
+    positiveUm <- Um >= 0
+    Pm0 <- Um * positiveUm
+    Nm0 <- abs(Um * !positiveUm)
+    
     iterations <- 0L
 
     rm <- rep(1, dim(Pm0)[1])
@@ -37,7 +72,7 @@ doSUTRAS.DomImp <- function(Pv0, Nv0,
         su <- 0.5 * dinv(ps) %*% X
 
         ## r
-        r <- M / sum(m0 * inv(rm))
+        r <- M / sum(m0 * sinv(rm))
 
         ## test for convergence 
         rd.test <- all(abs(rdm1 - rd) < epsilon)
@@ -102,12 +137,15 @@ doSUTRAS.DomImp <- function(Pv0, Nv0,
     ##
 
     ## V
-    V <- t(rv * t(Pv0 * inv(rd)) - inv(rv) * t(Nv0 * rd))
+    V <- t(rv * t(Pv0 * sinv(rd)) - sinv(rv) * t(Nv0 * rd))
     V[, 66] <- V[, 66] - c0
 
     ## Ud and Um
-    Ud <- rd * t(t(Pd0) * su) - inv(rd) * t(t(Nd0) * inv(su))
-    Um <- rm * t(t(Pm0) * su) - inv(rm) * t(t(Nm0) * inv(su))
+    Ud <- rd * t(t(Pd0) * su) - sinv(rd) * t(t(Nd0) * sinv(su))
+    Um <- rm * t(t(Pm0) * su) - sinv(rm) * t(t(Nm0) * sinv(su))
 
-    ## doSUTRAS until here <====
+    ## m vector
+    m <- r * (m0 * sinv(rm))
+
+    return(list(V, Ud, Um, m))
 }
