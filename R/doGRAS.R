@@ -44,6 +44,15 @@ doGRAS <- function(A, u, v,
     m <- nrow(A)
     n <- ncol(A)
 
+    if(n != length(v)) {
+        stop(paste0("Unequal number of columns! ncol(A) = ", n, " and length(v) = ", length(v),
+                    " should be equal!"))
+    }
+    if(m != length(u)) {
+        stop(paste0("Unequal number of rows! nrow(A) = ", m, " and length(u) = ", length(u),
+                    " should be equal!"))
+    }
+
     ## separate A into positive (P) and negative (N) matrizes
     P <- A
     N <- abs(A)
@@ -122,7 +131,7 @@ doGRAS <- function(A, u, v,
 #' @param colcol the column which holds the column-dimension of the reshaped matrix
 #' @param rowsum vector with the row totals
 #' @param colsum vector with the column totals
-#' @param ... parameter to be passed onto doGRAS
+#' @param ... parameter to be passed to doGRAS
 #' @return the updated data.table in the same format as before
 #' @author Oliver Reiter
 #' @references Junius T. and J. Oosterhaven (2003), The solution of
@@ -136,17 +145,27 @@ doGRAS <- function(A, u, v,
 #'     on the GRAS method, Economic Systems Research, 25, pp. 361-367.
 #' @keywords gras, matrix updating
 #' @export
-doGRAS.long <- function(df, rowcol, colcol,
+doGRAS.long <- function(dt, rowcol, colcol,
                         rowsum, colsum, ...) {
 
-    mat.wide <- dcast.data.table(df, get(rowcol) ~ get(colcol))
-    mat <- as.matrix(use.mat[, -rowcol, with = FALSE])
+    mat.wide <- dcast.data.table(dt, get(rowcol) ~ get(colcol), fill = 0)
 
-    res <- doGRAS(mat, rowsum, colsum, ...)
-    res <- data.table(prod.na = mat.wide[, rowcol],
-                      res)
-    df <- melt(res, id.vars = "prod.na",
-               variable.name = "induse", variable.factor = FALSE)
-    df
-    }
+    ## save the rowvalues for later on
+    rowvalues <- mat.wide[, 1] # can't get it to work with the name of the column...
+
+    ## extract the matrix
+    ## mat <- as.matrix(mat.wide[, columnstoKeep, with = FALSE])
+    mat <- as.matrix(mat.wide[, -1])
     
+    ## do the RASing
+    res <- doGRAS(mat, rowsum, colsum, ...)
+
+    ## feed the matrix back into a data.table
+    res <- data.table(prod.na = rowvalues, 
+                      res)
+    
+    ## and convert it back to a long data.table
+    dt <- melt(res, id.vars = "prod.na",
+               variable.name = "induse", variable.factor = FALSE)
+    dt
+}
