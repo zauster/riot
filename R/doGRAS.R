@@ -35,6 +35,11 @@ doGRAS <- function(A, u, v,
                    max.iter = 10000,
                    verbose = FALSE) {
 
+    ## TODO:
+    ## check for correct dimensions
+    ## conversion to vectors/matrices
+    ## what about NAs?
+
     ## get col/row numbers
     m <- nrow(A)
     n <- ncol(A)
@@ -88,6 +93,10 @@ doGRAS <- function(A, u, v,
         iter <- iter + 1
     }
 
+    if(iter >= max.iter) {
+        warning(paste0(" => Stopped after ", max.iter, " iterations. Optimal solution is NOT guaranteed!"))
+    }
+
     if(verbose) {
         message(" => Iterations needed: ", iter - 1)
         message(" => Resulting error: ", error, " at ", error.pos)
@@ -101,3 +110,43 @@ doGRAS <- function(A, u, v,
     
     return(X)
 }
+
+   
+#' Do the GRAS algorithm for a "long" data.table
+#'
+#' This function calculates an updated "long" data.table, based on a data.table dt,
+#' which meets the given row and columns totals. Note: dt can contain
+#' negative elements.
+#' @param dt the "long" data.table
+#' @param rowcol the column which holds the row-dimension of the reshaped matrix
+#' @param colcol the column which holds the column-dimension of the reshaped matrix
+#' @param rowsum vector with the row totals
+#' @param colsum vector with the column totals
+#' @param ... parameter to be passed onto doGRAS
+#' @return the updated data.table in the same format as before
+#' @author Oliver Reiter
+#' @references Junius T. and J. Oosterhaven (2003), The solution of
+#'     updating or regionalizing a matrix with both positive and
+#'     negative entries, Economic Systems Research, 15, pp. 87-96.
+#' 
+#'     Lenzen M., R. Wood and B. Gallego (2007), Some comments on the
+#'     GRAS method, Economic Systems Research, 19, pp. 461-465.
+#' 
+#'     Temurshoev, U., R.E. Miller and M.C. Bouwmeester (2013), A note
+#'     on the GRAS method, Economic Systems Research, 25, pp. 361-367.
+#' @keywords gras, matrix updating
+#' @export
+doGRAS.long <- function(df, rowcol, colcol,
+                        rowsum, colsum, ...) {
+
+    mat.wide <- dcast.data.table(df, get(rowcol) ~ get(colcol))
+    mat <- as.matrix(use.mat[, -rowcol, with = FALSE])
+
+    res <- doGRAS(mat, rowsum, colsum, ...)
+    res <- data.table(prod.na = mat.wide[, rowcol],
+                      res)
+    df <- melt(res, id.vars = "prod.na",
+               variable.name = "induse", variable.factor = FALSE)
+    df
+    }
+    
