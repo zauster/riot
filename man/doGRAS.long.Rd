@@ -4,9 +4,11 @@
 \alias{doGRAS.long}
 \title{Do the GRAS algorithm for a "long" data.table}
 \usage{
-doGRAS.long(df, rowcol, colcol, rowsum, colsum, ...)
+doGRAS.long(dt, rowcol, colcol, rowsum, colsum, ...)
 }
 \arguments{
+\item{dt}{the "long" data.table}
+
 \item{rowcol}{the column which holds the row-dimension of the reshaped matrix}
 
 \item{colcol}{the column which holds the column-dimension of the reshaped matrix}
@@ -15,9 +17,7 @@ doGRAS.long(df, rowcol, colcol, rowsum, colsum, ...)
 
 \item{colsum}{vector with the column totals}
 
-\item{...}{parameter to be passed onto doGRAS}
-
-\item{dt}{the "long" data.table}
+\item{...}{parameter to be passed to doGRAS}
 }
 \value{
 the updated data.table in the same format as before

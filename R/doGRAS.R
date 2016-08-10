@@ -73,20 +73,20 @@ doGRAS <- function(A, u, v,
         ## calculate multiplicator s
         ## 
         pj.r <- t(P) %*% r
-        nj.r <- t(N) %*% inv(r)
+        nj.r <- t(N) %*% sinv(r)
 
-        s <- inv(2 * pj.r) * (v + sqrt(v^2 + 4 * pj.r * nj.r))
-        s.alt <- -inv(v) * nj.r
+        s <- sinv(2 * pj.r) * (v + sqrt(v^2 + 4 * pj.r * nj.r))
+        s.alt <- -sinv(v) * nj.r
         s[s == 0] <- s.alt[s == 0]
 
         ##
         ## calculate multiplicator r
         ##
         pi.s <- P %*% s
-        ni.s <- N %*% inv(s)
+        ni.s <- N %*% sinv(s)
 
-        r <- inv(2 * pi.s) * (u + sqrt(u^2 + 4 * pi.s * ni.s))
-        r.alt <- -inv(u) * ni.s
+        r <- sinv(2 * pi.s) * (u + sqrt(u^2 + 4 * pi.s * ni.s))
+        r.alt <- -sinv(u) * ni.s
         r[r == 0] <- r.alt[r == 0]
 
         ##
@@ -114,8 +114,8 @@ doGRAS <- function(A, u, v,
     r <- as.vector(r)
     s <- as.vector(s)
 
-    ## X.1 <- diag(r) %*% P %*% diag(s) - diag(inv(r)) %*% N %*% diag(inv(s))
-    X <- sweep(r * P, 2, s, "*") - sweep(inv(r) * N, 2, inv(s), "*")
+    ## X.1 <- diag(r) %*% P %*% diag(s) - diag(sinv(r)) %*% N %*% diag(sinv(s))
+    X <- sweep(r * P, 2, s, "*") - sweep(sinv(r) * N, 2, sinv(s), "*")
     
     return(X)
 }
