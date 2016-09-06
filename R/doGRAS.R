@@ -145,6 +145,7 @@ doGRAS <- function(A, u, v,
 #'     on the GRAS method, Economic Systems Research, 25, pp. 361-367.
 #' @keywords gras, matrix updating
 #' @export
+#' @import data.table
 doGRAS.long <- function(dt, rowcol, colcol,
                         rowsum, colsum, ...) {
 
@@ -165,7 +166,9 @@ doGRAS.long <- function(dt, rowcol, colcol,
                       res)
     
     ## and convert it back to a long data.table
-    dt <- melt(res, id.vars = "prod.na",
-               variable.name = "induse", variable.factor = FALSE)
+    dt <- melt.data.table(res, id.vars = "prod.na",
+                          variable.name = "induse",
+                          variable.factor = FALSE)
+    
     dt
 }

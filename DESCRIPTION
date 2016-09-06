@@ -5,6 +5,8 @@ Authors@R: person("Oliver", "Reiter", email = "reiter@wiiw.ac.at", role = c("aut
 Description: Contains some functions that could be used in the context of input-output tables, such as the GRAS algorithm for updating matrizes.
 Depends:
     R (>= 3.2)
+Imports:
+    data.table
 Suggests:
     testthat
 License: GPL-3

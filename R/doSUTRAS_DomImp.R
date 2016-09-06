@@ -17,6 +17,7 @@
 #'     be carried out
 #' @param verbose should diagnostic output of the iterations be
 #'     displayed? Default = FALSE.
+#' @import data.table
 doSUTRAS.DomImp <- function(V, Ud, Um, m0,
                             ubar, xbar,
                             M, c0,
