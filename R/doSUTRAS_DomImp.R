@@ -2,28 +2,32 @@
 #'
 #' do a SUTRAS update when the use table is separated in domestic and
 #' imported products. Row and column totals are met.
-#' @param V the supply matrix
-#' @param Ud the domestic use matrix
-#' @param Um the import use matrix
-#' @param m0 the import vector (as normally included in the supply
-#'     matrix)
-#' @param ubar intermediate consumption by industry sector
-#' @param xbar gross output by industry sector
-#' @param M total imports
-#' @param c0 the absolute (negative) values of the trade margins
-#'     vector, see references for details.
+#' @param SUT a SUT object containing supply and use matrizes
+#' @param ProjData Projection (forecast) data containing intermediate
+#'     consumption and gross output
 #' @param epsilon the convergence tolerance, default = 1e-6.
 #' @param max.iterations the maximal number of iterations that would
 #'     be carried out
 #' @param verbose should diagnostic output of the iterations be
 #'     displayed? Default = FALSE.
 #' @import data.table
-doSUTRAS.DomImp <- function(V, Ud, Um, m0,
-                            ubar, xbar,
-                            M, c0,
+doSUTRAS.DomImp <- function(SUT, #V, Ud, Um, m0,
+                            ProjData, #ubar, xbar, M, c0,
                             epsilon = 1e-6,
                             max.iterations = 10000, 
                             verbose = FALSE) {
+
+    ##
+    ## use own variables for better readability
+    V <- SUT$V
+    Ud <- SUT$Ud
+    Um <- SUT$Um
+    m0 <- SUT$m0
+
+    ubar <- ProjData$ubar
+    xbar <- ProjData$xbar
+    M <- ProjData$M
+    c0 <- ProjData$c0
 
     ## 
     ## separate positive from negative entries
@@ -148,5 +152,7 @@ doSUTRAS.DomImp <- function(V, Ud, Um, m0,
     ## m vector
     m <- r * (m0 * sinv(rm))
 
-    return(list(V, Ud, Um, m))
+    return(structure(list(country = SUT$country, year = SUT$year,
+                          V = V, Ud = Ud, Um = Um, m0 = m),
+                     class = "SUT")) 
 }

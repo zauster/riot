@@ -18,8 +18,8 @@ isConsistent <- function(sut, tol = 1e-4,
     V.rowsums <- rowSums(sut$V) + sut$m0
     U.rowsums <- rowSums(sut$Ud) + rowSums(sut$Um)
 
-    row.diff <- abs(V.rowsums - U.rowsums)
-
+    row.diff <- abs(V.rowsums - U.rowsums) / pmax(V.rowsums, U.rowsums)
+    row.diff[!is.finite(row.diff)] <- 0
     consistent.rows <- all(row.diff < tol)
 
 
@@ -48,10 +48,3 @@ isConsistent <- function(sut, tol = 1e-4,
 
     return(consistent)
 }
-## load("../data/DK_SUTs_mat.RData")
-
-## dk.2010 <- list(V = V,
-##                 Ud = Ud,
-##                 Um = Um,
-##                 year = 2010,
-##                 country = "DK")

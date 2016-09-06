@@ -6,9 +6,11 @@ riot
 Installation
 ------------
 
-As this package is still in development, I can not yet be installed through CRAN.
+As this package is still in development, it can not yet be installed
+through CRAN.
 
-This development version can, however, be installed using the `devtools` package:
+This development version can, however, be installed using the
+`devtools` package:
 
 ```r
 if (!require('devtools')) install.packages('devtools')
