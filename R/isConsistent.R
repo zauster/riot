@@ -15,7 +15,7 @@ isConsistent <- function(sut, tol = 1e-4,
     ##
     ## consistent row sums ?
     ##
-    V.rowsums <- rowSums(sut$V)
+    V.rowsums <- rowSums(sut$V) + sut$m0
     U.rowsums <- rowSums(sut$Ud) + rowSums(sut$Um)
 
     row.diff <- abs(V.rowsums - U.rowsums)
@@ -27,6 +27,7 @@ isConsistent <- function(sut, tol = 1e-4,
     ## consistent column sums ?
     ##
     consistent.cols <- TRUE
+    col.diff <- 0
     if(VA.included) {
         V.colsums <- colSums(sut$V)
         U.colsums <- colSums(sut$Ud) + colSums(sut$Um) + colSums(sut$VA)
