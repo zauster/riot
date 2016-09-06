@@ -11,7 +11,7 @@
 #' @author Oliver Reiter \email{oliver.reiter@snapdragon.cc}
 #' @references \url{http://ec.europa.eu/eurostat/data/database}
 #' @keywords data
-"dk"
+"dk.sut"
 
 #' Danish national accounts data 
 #'
@@ -28,11 +28,3 @@
 #' @references \url{http://ec.europa.eu/eurostat/data/database}
 #' @keywords data
 "dk.2011"
-
-
-## setwd("/home/reitero/Arbeit/Rprogramming/riot/data")
-## load("DK_SUTs_2010t2011.RData")
-## load("DK_ProjData.RData")
-
-## save(dk, file = "DK_SUT_2010.RData")
-## save(dk.2011, file = "DK_ProjData_2011.RData")

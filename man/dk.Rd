@@ -3,13 +3,14 @@
 \docType{data}
 \name{dk}
 \alias{dk}
+\alias{dk.sut}
 \title{Denmark SUTs}
 \format{A list with a supply table (V, a matrix) and a separate
     import vector (m0), domestic use table (Ud, matrix) and import
     use table (Um, matrix). Furthermore, the country and time of
     the SUT system.}
 \usage{
-dk
+dk.sut
 }
 \description{
 Danish supply and use tables. The use table is split into domestic

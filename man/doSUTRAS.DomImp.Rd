@@ -4,27 +4,14 @@
 \alias{doSUTRAS.DomImp}
 \title{do a SUTRAS update}
 \usage{
-doSUTRAS.DomImp(V, Ud, Um, m0, ubar, xbar, M, c0, epsilon = 0.000001,
-  max.iterations = 10000, verbose = FALSE)
+doSUTRAS.DomImp(SUT, ProjData, epsilon = 0.000001, max.iterations = 10000,
+  verbose = FALSE)
 }
 \arguments{
-\item{V}{the supply matrix}
+\item{SUT}{a SUT object containing supply and use matrizes}
 
-\item{Ud}{the domestic use matrix}
-
-\item{Um}{the import use matrix}
-
-\item{m0}{the import vector (as normally included in the supply
-matrix)}
-
-\item{ubar}{intermediate consumption by industry sector}
-
-\item{xbar}{gross output by industry sector}
-
-\item{M}{total imports}
-
-\item{c0}{the absolute (negative) values of the trade margins
-vector, see references for details.}
+\item{ProjData}{Projection (forecast) data containing intermediate
+consumption and gross output}
 
 \item{epsilon}{the convergence tolerance, default = 1e-6.}
 
