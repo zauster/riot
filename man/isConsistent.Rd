@@ -4,10 +4,10 @@
 \alias{isConsistent}
 \title{Function to check the consistency of a SUT system}
 \usage{
-isConsistent(sut, tol = 0.0001, VA.included = FALSE)
+isConsistent(SUT, tol = 0.0001, VA.included = FALSE)
 }
 \arguments{
-\item{sut}{the SUT system to be tested}
+\item{SUT}{the SUT system to be tested}
 
 \item{tol}{the tolerance (epsilon), default = 1e-4}
 

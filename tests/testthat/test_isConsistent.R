@@ -1,6 +1,6 @@
 
-data(DK_SUT_2010)
+## data(DK_SUT_2010)
 
-isConsistent(dk.sut)
+## isConsistent(dk.sut)
 
-data(DK_ProjData_2011)
+## data(DK_ProjData_2011)
