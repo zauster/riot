@@ -152,11 +152,11 @@ doGRAS.long <- function(dt, rowcol, colcol,
     mat.wide <- dcast.data.table(dt, get(rowcol) ~ get(colcol), fill = 0)
 
     ## save the rowvalues for later on
-    rowvalues <- mat.wide[, 1] # can't get it to work with the name of the column...
+    ## rowvalues <- mat.wide[, 1, with = FALSE] # can't get it to work with the name of the column...
+    rowvalues <- mat.wide[, rowcol]
 
     ## extract the matrix
-    ## mat <- as.matrix(mat.wide[, columnstoKeep, with = FALSE])
-    mat <- as.matrix(mat.wide[, -1])
+    mat <- as.matrix(mat.wide[, 2:ncol(mat.wide), with = FALSE])
     
     ## do the RASing
     res <- doGRAS(mat, rowsum, colsum, ...)
