@@ -19,15 +19,24 @@ doSUTRAS.DomImp <- function(SUT, #V, Ud, Um, m0,
 
     ##
     ## use own variables for better readability
+
+    ## SUTs
     V <- SUT$V
     Ud <- SUT$Ud
     Um <- SUT$Um
     m0 <- SUT$m0
 
+    ## ProjData
     ubar <- ProjData$ubar
-    xbar <- ProjData$xbar
-    M <- ProjData$M
+    xbar <- ProjData$xbar[!(names(ProjData$xbar) %in% "xP7")]
+    M <- ProjData$xbar["xP7"]
     c0 <- ProjData$c0
+
+    ##
+    ## adjustment columns have to be moved into the import use table
+    ## otherwise the adjustment columns will not enter the updating
+    Um[c("OP_RES", "OP_NRES", "xADJ_P67"), ] <- Ud[c("OP_RES", "OP_NRES", "xADJ_P67"), ]
+    Ud[c("OP_RES", "OP_NRES", "xADJ_P67"), ] <- 0
 
     ## 
     ## separate positive from negative entries
