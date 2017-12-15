@@ -6,19 +6,49 @@
 
 using namespace Rcpp;
 
-// Rcpp_SUTRAS
-arma::mat Rcpp_SUTRAS();
-RcppExport SEXP _riot_Rcpp_SUTRAS() {
+// sinvc
+arma::colvec sinvc(arma::colvec x);
+RcppExport SEXP _riot_sinvc(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(Rcpp_SUTRAS());
+    Rcpp::traits::input_parameter< arma::colvec >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(sinvc(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sinvr
+arma::rowvec sinvr(arma::rowvec x);
+RcppExport SEXP _riot_sinvr(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::rowvec >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(sinvr(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Rcpp_doGRAS
+arma::mat Rcpp_doGRAS(arma::mat A, arma::colvec u, arma::rowvec v, double epsilon, int maxiter, bool verbose);
+RcppExport SEXP _riot_Rcpp_doGRAS(SEXP ASEXP, SEXP uSEXP, SEXP vSEXP, SEXP epsilonSEXP, SEXP maxiterSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::colvec >::type u(uSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
+    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(Rcpp_doGRAS(A, u, v, epsilon, maxiter, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_riot_Rcpp_SUTRAS", (DL_FUNC) &_riot_Rcpp_SUTRAS, 0},
+    {"_riot_sinvc", (DL_FUNC) &_riot_sinvc, 1},
+    {"_riot_sinvr", (DL_FUNC) &_riot_sinvr, 1},
+    {"_riot_Rcpp_doGRAS", (DL_FUNC) &_riot_Rcpp_doGRAS, 6},
     {NULL, NULL, 0}
 };
 
