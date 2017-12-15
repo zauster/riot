@@ -13,4 +13,3 @@ sinv(x)
 Calculate the inverse of a vector (1 / x) and set
 non-finite values back to 1
 }
-

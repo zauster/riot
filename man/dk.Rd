@@ -16,11 +16,10 @@ dk.sut
 Danish supply and use tables. The use table is split into domestic
 and import use.
 }
-\author{
-Oliver Reiter \email{oliver.reiter@snapdragon.cc}
-}
 \references{
 \url{http://ec.europa.eu/eurostat/data/database}
 }
+\author{
+Oliver Reiter \email{oliver.reiter@snapdragon.cc}
+}
 \keyword{data}
-

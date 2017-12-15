@@ -25,4 +25,3 @@ displayed? Default = FALSE.}
 do a SUTRAS update when the use table is separated in domestic and
 imported products. Row and column totals are met.
 }
-

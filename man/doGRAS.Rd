@@ -36,9 +36,6 @@ u <- c(15, 26, -1)
 v <- c(9, 16, 17, -2)
 doGRAS(A, u, v)
 }
-\author{
-Oliver Reiter
-}
 \references{
 Junius T. and J. Oosterhaven (2003), The solution of
     updating or regionalizing a matrix with both positive and
@@ -50,7 +47,9 @@ Junius T. and J. Oosterhaven (2003), The solution of
     Temurshoev, U., R.E. Miller and M.C. Bouwmeester (2013), A note
     on the GRAS method, Economic Systems Research, 25, pp. 361-367.
 }
+\author{
+Oliver Reiter
+}
 \keyword{gras,}
 \keyword{matrix}
 \keyword{updating}
-

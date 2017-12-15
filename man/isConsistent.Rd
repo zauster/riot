@@ -24,4 +24,3 @@ Given a SUT system containing a supply table and a domestic and a
 import use table, this function checks if the rows and columns are
 consistent.
 }
-

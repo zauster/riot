@@ -16,11 +16,10 @@ dk.2011
 Danish national accounts data, aka projection data that is used to
 update the SUT.
 }
-\author{
-Oliver Reiter \email{oliver.reiter@snapdragon.cc}
-}
 \references{
 \url{http://ec.europa.eu/eurostat/data/database}
 }
+\author{
+Oliver Reiter \email{oliver.reiter@snapdragon.cc}
+}
 \keyword{data}
-
