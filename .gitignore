@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 /R/.#.Rhistory
+src/*.o
+/src/riot.so

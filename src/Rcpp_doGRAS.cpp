@@ -1,7 +1,5 @@
-#include "stdio.h"
+// #include "stdio.h"
 #include "RcppArmadillo.h"
-
-using namespace std;
 
 //' Invert a column vector
 //'
@@ -61,7 +59,7 @@ arma::mat Rcpp_doGRAS(arma::mat A,
                       arma::rowvec v,
                       double epsilon = 1e-10,
                       int maxiter = 1000,
-                      bool verbose = true) {
+                      bool verbose = false) {
   int nrowsA = A.n_rows;
   int ncolsA = A.n_cols;
   int nrowsu = u.n_rows;
@@ -84,40 +82,40 @@ arma::mat Rcpp_doGRAS(arma::mat A,
 
   // initialize the multiplicators
   arma::rowvec s = arma::rowvec(ncolsA).ones();
-  arma::rowvec sold, salt, pjr, njr = arma::rowvec(ncolsA);
+  arma::rowvec s_old, s_alt, pj_r, nj_r = arma::rowvec(ncolsA);
 
   arma::colvec r = arma::colvec(nrowsA).ones();
-  arma::colvec ralt, pis, nis = arma::colvec(nrowsA);
+  arma::colvec r_alt, pi_s, ni_s = arma::colvec(nrowsA);
 
   double error = 1;
   int iter = 1;
   int errorpos;
 
   do {
-    sold = s;
+    s_old = s;
 
     // row multiplicator s
-    pjr = r.t() * P;
-    njr = sinvc(r).t() * N;
-    s = sinvr(2 * pjr) % (v + arma::sqrt(pow(v, 2) + 4 * pjr % njr));
-    salt = -1 * sinvr(v) % njr;
-    s(find(s == 0)) = salt(find(s == 0));
-    // cout << "s: " << s; // << endl;
+    pj_r = r.t() * P;
+    nj_r = sinvc(r).t() * N;
+    s = sinvr(2 * pj_r) % (v + arma::sqrt(pow(v, 2) + 4 * pj_r % nj_r));
+    s_alt = -1 * sinvr(v) % nj_r;
+    s(find(s == 0)) = s_alt(find(s == 0));
+    // Rcpp::Rcout << "s: " << s; // << std::endl;
 
-    // col multiplicator r
-    pis = P * s.t();
-    nis = N * sinvr(s).t();
-    r = sinvc(2 * pis) % (u + arma::sqrt(pow(u, 2) + 4 * pis % nis));
-    ralt = -1 * sinvc(u) % nis;
-    r(find(r == 0)) = ralt(find(r == 0));
-    // cout << "r': " << r.t(); // << endl;
+    // column multiplicator r
+    pi_s = P * s.t();
+    ni_s = N * sinvr(s).t();
+    r = sinvc(2 * pi_s) % (u + arma::sqrt(pow(u, 2) + 4 * pi_s % ni_s));
+    r_alt = -1 * sinvc(u) % ni_s;
+    r(find(r == 0)) = r_alt(find(r == 0));
+    // Rcpp::Rcout << "r': " << r.t(); // << std::endl;
 
-    error = abs(sold - s).max();
-    errorpos = abs(sold - s).index_max();
+    error = abs(s_old - s).max();
 
     if(verbose) {
-      cout << "iter: " << iter << " -> error: " << error
-           << " at " << errorpos << endl;
+      errorpos = abs(s_old - s).index_max();
+      Rcpp::Rcout << "iter: " << iter << " -> error: " << error
+           << " at " << errorpos << std::endl;
     }
 
     iter++;
@@ -125,14 +123,17 @@ arma::mat Rcpp_doGRAS(arma::mat A,
   } while((error > epsilon) & (iter <= maxiter));
 
   if(iter >= maxiter) {
-    cout << "Warning: Reached maxiter!" << endl;
+    Rcpp::Rcout << "Warning: Reached maxiter!" << std::endl;
   }
 
   if(verbose) {
-    cout << " => Iterations needed: " << iter;
-    cout << " => Resulting error: " << error << " at " << errorpos << endl;
+    Rcpp::Rcout << " => Iterations needed: " << iter;
+    Rcpp::Rcout << " => Resulting error: " << error << " at " << errorpos
+                << std::endl;
   }
 
+  // calculate the updated matrizes:
+  // the multiplicators are both applied to all columns and rows
   P.each_row() %= s;
   P.each_col() %= r;
   N.each_row() %= sinvr(s);

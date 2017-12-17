@@ -9,7 +9,7 @@ sinvr <- function(x) {
     .Call('_riot_sinvr', PACKAGE = 'riot', x)
 }
 
-Rcpp_doGRAS <- function(A, u, v, epsilon = 1e-10, maxiter = 1000L, verbose = TRUE) {
+Rcpp_doGRAS <- function(A, u, v, epsilon = 1e-10, maxiter = 1000L, verbose = FALSE) {
     .Call('_riot_Rcpp_doGRAS', PACKAGE = 'riot', A, u, v, epsilon, maxiter, verbose)
 }
 
