@@ -1,4 +1,3 @@
-// #include "stdio.h"
 #include "RcppArmadillo.h"
 
 //' Invert a column vector

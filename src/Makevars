@@ -1,2 +1,2 @@
-PKG_CPPFLAGS =  -I../inst/include/
-CXX1XSTD = -std=c++11
+PKG_CPPFLAGS =  -I../inst/include/ -fopenmp
+CXX_STD = CXX11
