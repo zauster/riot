@@ -6,6 +6,43 @@
 
 using namespace Rcpp;
 
+// doGRAS
+arma::mat doGRAS(arma::mat A, arma::colvec u, arma::rowvec v, double epsilon, int maxiter, bool verbose);
+RcppExport SEXP _riot_doGRAS(SEXP ASEXP, SEXP uSEXP, SEXP vSEXP, SEXP epsilonSEXP, SEXP maxiterSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::colvec >::type u(uSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
+    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(doGRAS(A, u, v, epsilon, maxiter, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
+// doSUTRAS
+Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud, arma::mat Um, arma::vec m0, arma::rowvec u_bar, arma::rowvec x_bar, double M, arma::colvec c, double epsilon, int maxiter, bool verbose);
+RcppExport SEXP _riot_doSUTRAS(SEXP VSEXP, SEXP UdSEXP, SEXP UmSEXP, SEXP m0SEXP, SEXP u_barSEXP, SEXP x_barSEXP, SEXP MSEXP, SEXP cSEXP, SEXP epsilonSEXP, SEXP maxiterSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type V(VSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Ud(UdSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Um(UmSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type m0(m0SEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type u_bar(u_barSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type x_bar(x_barSEXP);
+    Rcpp::traits::input_parameter< double >::type M(MSEXP);
+    Rcpp::traits::input_parameter< arma::colvec >::type c(cSEXP);
+    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
+    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(doSUTRAS(V, Ud, Um, m0, u_bar, x_bar, M, c, epsilon, maxiter, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sinvc
 arma::colvec sinvc(arma::colvec x);
 RcppExport SEXP _riot_sinvc(SEXP xSEXP) {
@@ -28,27 +65,64 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// Rcpp_doGRAS
-arma::mat Rcpp_doGRAS(arma::mat A, arma::colvec u, arma::rowvec v, double epsilon, int maxiter, bool verbose);
-RcppExport SEXP _riot_Rcpp_doGRAS(SEXP ASEXP, SEXP uSEXP, SEXP vSEXP, SEXP epsilonSEXP, SEXP maxiterSEXP, SEXP verboseSEXP) {
+// ShermanUpdateCol
+void ShermanUpdateCol(arma::mat& A, arma::colvec u, int i);
+RcppExport SEXP _riot_ShermanUpdateCol(SEXP ASEXP, SEXP uSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::colvec >::type u(uSEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    ShermanUpdateCol(A, u, i);
+    return R_NilValue;
+END_RCPP
+}
+// ShermanUpdateRow
+void ShermanUpdateRow(arma::mat& A, arma::rowvec v, int i);
+RcppExport SEXP _riot_ShermanUpdateRow(SEXP ASEXP, SEXP vSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type v(vSEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    ShermanUpdateRow(A, v, i);
+    return R_NilValue;
+END_RCPP
+}
+// index_noti
+arma::uvec index_noti(int i, int nm1);
+RcppExport SEXP _riot_index_noti(SEXP iSEXP, SEXP nm1SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type nm1(nm1SEXP);
+    rcpp_result_gen = Rcpp::wrap(index_noti(i, nm1));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rwCentrality
+arma::rowvec rwCentrality(arma::mat A, bool verbose);
+RcppExport SEXP _riot_rwCentrality(SEXP ASEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
-    Rcpp::traits::input_parameter< arma::colvec >::type u(uSEXP);
-    Rcpp::traits::input_parameter< arma::rowvec >::type v(vSEXP);
-    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
-    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(Rcpp_doGRAS(A, u, v, epsilon, maxiter, verbose));
+    rcpp_result_gen = Rcpp::wrap(rwCentrality(A, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_riot_doGRAS", (DL_FUNC) &_riot_doGRAS, 6},
+    {"_riot_doSUTRAS", (DL_FUNC) &_riot_doSUTRAS, 11},
     {"_riot_sinvc", (DL_FUNC) &_riot_sinvc, 1},
     {"_riot_sinvr", (DL_FUNC) &_riot_sinvr, 1},
-    {"_riot_Rcpp_doGRAS", (DL_FUNC) &_riot_Rcpp_doGRAS, 6},
+    {"_riot_ShermanUpdateCol", (DL_FUNC) &_riot_ShermanUpdateCol, 3},
+    {"_riot_ShermanUpdateRow", (DL_FUNC) &_riot_ShermanUpdateRow, 3},
+    {"_riot_index_noti", (DL_FUNC) &_riot_index_noti, 2},
+    {"_riot_rwCentrality", (DL_FUNC) &_riot_rwCentrality, 2},
     {NULL, NULL, 0}
 };
 

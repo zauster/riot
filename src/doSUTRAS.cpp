@@ -1,28 +1,8 @@
 #include "stdio.h"
 #include "RcppArmadillo.h"
+#include "helperFunctions.h"
 
 using namespace Rcpp;
-
-//' Invert a column vector
-//'
-// [[Rcpp::depends(RcppArmadillo)]]
-// [[Rcpp::export]]
-arma::colvec sinvc(arma::colvec x) {
-  x.transform( [](double val) { return 1/val; });
-  x.elem(find_nonfinite(x)).ones();
-  return x;
-}
-
-//' Invert a row vector
-//'
-// [[Rcpp::depends(RcppArmadillo)]]
-// [[Rcpp::export]]
-arma::rowvec sinvr(arma::rowvec x) {
-  x.transform( [](double val) { return 1/val; });
-  x.elem(find_nonfinite(x)).ones();
-  return x;
-}
-
 
 //' Do the SUTRAS algorithm for updating supply and use tables
 //'
@@ -46,14 +26,14 @@ arma::rowvec sinvr(arma::rowvec x) {
 //' @examples
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
-Rcpp::List Rcpp_doSUTRAS(arma::mat V, arma::mat Ud,
-                         arma::mat Um, arma::vec m0,
-                         arma::rowvec u_bar,
-                         arma::rowvec x_bar,
-                         double M, arma::colvec c,
-                         double epsilon = 1e-10,
-                         int maxiter = 1000,
-                         bool verbose = false) {
+Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
+                    arma::mat Um, arma::vec m0,
+                    arma::rowvec u_bar,
+                    arma::rowvec x_bar,
+                    double M, arma::colvec c,
+                    double epsilon = 1e-10,
+                    int maxiter = 1000,
+                    bool verbose = false) {
 
   // separate supply matrix into positive and negative part
   arma::mat Pv0 = arma::mat(V);
@@ -61,7 +41,7 @@ Rcpp::List Rcpp_doSUTRAS(arma::mat V, arma::mat Ud,
   arma::mat Nv0 = arma::mat(V);
   Nv0.transform( [](double val) { return val < 0? -val : 0; });
 
-  // andc++ the domestic use matrix too
+  // and the domestic use matrix too
   arma::mat Pd0 = arma::mat(Ud);
   Pd0.transform( [](double val) { return val >= 0? val : 0; });
   arma::mat Nd0 = arma::mat(Ud);
