@@ -1,4 +1,3 @@
-
 context("Testing GRAS algorithm")
 
 A <- matrix(c(7, 3, 5, -3, 2, 9, 8, 0, -2, 0, 2, 0),
@@ -14,7 +13,7 @@ test_that("output is a matrix", {
 })
 
 test_that("output matches", {
-    
+
     ## first row
     expect_equal( res[1, 1], 8.424340881, tolerance = .002 )
   expect_equal( res[1, 2], 3.375237362, tolerance = .002 )

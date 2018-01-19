@@ -83,35 +83,23 @@ Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
     pd = Pd0 * su.t() + sum(Nv0.each_row() % sinvr(rv), 1);
     nd = sum(Nd0.each_row() % sinvr(su), 1) + Pv0 * rv.t();
     rd = (0.5 * sinvc(pd)) % (-1 * c + arma::sqrt((c % c) + 4 * (pd % nd)));
-    // Rcout << "pd: " << pd << std::endl;
-    // Rcout << "nd: " << nd << std::endl;
-    // Rcout << "rd: " << rd.t() << std::endl;
 
     // rm
     rm = arma::sqrt(sinvc(Pm0 * su.t()) % (sum(Nm0.each_row() % sinvr(su), 1) + r * m0));
-    // Rcout << std::fixed << "rm1: " << rm.t() << std::endl;
 
     // rv
     rv_tmp = sum(Pv0.each_col() % sinvc(rd), 0);
-    // Rcout << "rv: " << rv << std::endl;
     rv = x_bar + arma::sqrt(x_bar % x_bar + 4 * (rv % (Nv0.t() * rd).t()));
-    // Rcout << "rv: " << rv << std::endl;
     rv = 0.5 * sinvr(rv_tmp) % rv;
-    // Rcout << "rv: " << rv << std::endl;
 
     // su
     ps = (Pd0.t() * rd + Pm0.t() * rm).t();
-    // Rcout << "ps: " << ps << std::endl;
     ns = sum(Nd0.each_col() % sinvc(rd), 0) + sum(Nm0.each_col() % sinvc(rm), 0);
-    // Rcout << "ns: " << ns << std::endl;
     ns = u_bar + arma::sqrt(u_bar % u_bar + 4 * (ps % ns));
-    // Rcout << "ns: " << ns << std::endl;
     su = 0.5 * sinvr(ps) % ns;
-    // Rcout << "su: " << su << std::endl;
 
     // r
     r = M / sum(m0 % sinvc(rm));
-    // Rcout << "r: " << r;
 
     rd_test = any(abs(rd_m1 - rd) > epsilon);
     rm_test = any(abs(rm_m1 - rm) > epsilon);
@@ -119,16 +107,16 @@ Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
     if(verbose) {
       rd_diff = abs(rd_m1 - rd);
       rm_diff = abs(rm_m1 - rm);
-      Rcout << "Iteration " << iter;
-      Rcout << "   rd diff: " << sum(rd_diff)
-            << "   rm diff: " << sum(rm_diff) << std::endl;
+      Rcout << "Iter " << iter;
+      Rcout << "  rd diff: " << sum(rd_diff)
+            << "  rm diff: " << sum(rm_diff) << std::endl;
     } //else if(iter %% 50 == ) {}
 
     iter++;
   } while ((rd_test | rm_test) & iter < maxiter);
 
 
-  // apply the multiplicators, ie, update the matrizes. We save the results in
+  // apply the multiplicators, update the matrizes. We save the results in
   // the positive parts (eg. Pv0) of the respective matrizes
   // V, supply matrix:
   Pv0.each_col() %= sinvc(rd);
@@ -167,13 +155,20 @@ Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
     Rcout << "  ubar diff: " << su << std::endl;
     Rcpp::warning("Some column sums are not completely equalized!");
   }
+
   // test if the product sums are equal to each other
   rm = sum(Pm0, 1) + sum(Pd0, 1);
   rd = sum(Pv0, 1) + m0;
 
-  // // product/row sums are never that exact as the column sums, that's why we
-  // // adjust the epsilon below.
-  // rm = abs(rm - rd);
+  // product/row sums are never that exact as the column sums, that's why we
+  // adjust the epsilon below.
+
+  rm = abs(rm - rd);
+  if(verbose) {
+    Rcout << "Biggest diff in product sums: "
+          << max(rm)
+          << std::endl;
+  }
   // double epsilon1000 = epsilon * 5000;
   // if(any(rm > epsilon1000)) {
   //   Rcout << "diff: " << rm.t() << std::endl;
@@ -182,6 +177,7 @@ Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
 
   return Rcpp::List::create(Rcpp::Named("iter") = iter,
                             Rcpp::Named("V")    = Pv0,
+                            Rcpp::Named("m")    = m0,
                             Rcpp::Named("Ud")   = Pd0,
                             Rcpp::Named("Um")   = Pm0);
 }

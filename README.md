@@ -33,3 +33,11 @@ See the help-files for some examples of the usage of the package.
 ```r
 help("riot")
 ```
+
+To Do
+-----
+
+- DOCUMENTATION!
+- compute IO table from supply and use tables
+- replace missings in sut tables
+- class system for SUTs/IO
