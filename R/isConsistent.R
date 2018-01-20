@@ -31,8 +31,8 @@ isConsistent <- function(SUT, tol = 1e-4,
         res$row.diff.percent <- row.diff.percent[row.diff.percent > tol] * 100
         res$row.diff.abs <- row.diff.abs[row.diff.percent > tol]
     }
-    
-    ## 
+
+    ##
     ## consistent column sums ?
     ##
     if(VA.included) {

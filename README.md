@@ -37,7 +37,7 @@ help("riot")
 To Do
 -----
 
-- fix DOCUMENTATION!
-- compute IO table from supply and use tables
-- replace missings in sut tables
-- class system for SUTs/IO
+1. [x] fix DOCUMENTATION!
+1. [ ] class system for SUTs and/or IO, preferably using the R6 class system
+1. [ ] compute IO table from supply and use tables
+1. [ ] replace missings in sut tables

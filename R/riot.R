@@ -10,3 +10,7 @@
 #' @exportPattern "^[[:alpha:]]+"
 #' @name riot
 NULL
+
+.onUnload <- function (libpath) {
+  library.dynam.unload("mypackage", libpath)
+}
