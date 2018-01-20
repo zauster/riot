@@ -2,10 +2,13 @@
 #include "RcppArmadillo.h"
 
 using namespace Rcpp;
+// [[Rcpp::depends(RcppArmadillo)]]
 
 //' Update the inverse by column
 //'
-// [[Rcpp::depends(RcppArmadillo)]]
+//' @param A an inverse of a matrix to be updated
+//' @param u column vector
+//' @param i row index
 // [[Rcpp::export]]
 void ShermanUpdateCol(arma::mat &A, arma::colvec u, int i) {
   A -= ((A * u) * A.row(i)) / arma::as_scalar(1 + A.row(i) * u);
@@ -14,7 +17,9 @@ void ShermanUpdateCol(arma::mat &A, arma::colvec u, int i) {
 
 //' Update the inverse by row
 //'
-// [[Rcpp::depends(RcppArmadillo)]]
+//' @param A an inverse of a matrix to be updated
+//' @param v row vector
+//' @param i column index
 // [[Rcpp::export]]
 void ShermanUpdateRow(arma::mat &A, arma::rowvec v, int i) {
   A -= (A.col(i) * (v * A)) / arma::as_scalar(1 + v * A.col(i));
@@ -22,7 +27,8 @@ void ShermanUpdateRow(arma::mat &A, arma::rowvec v, int i) {
 
 //' Return a vector of indices except index i
 //'
-// [[Rcpp::depends(RcppArmadillo)]]
+//' @param i index not to be included
+//' @param nm1 length of the vector
 // [[Rcpp::export]]
 arma::uvec index_noti(int i, int nm1) {
   arma::uvec index = arma::uvec(nm1);
@@ -46,8 +52,7 @@ arma::uvec index_noti(int i, int nm1) {
 //' @author Oliver Reiter
 //' @references Blöchl F, Theis FJ, Vega-Redondo F, and Fisher E: Vertex Centralities in Input-Output Networks Reveal the Structure of Modern Economies, Physical Review E, 83(4):046127, 2011
 //' @keywords input-output analysis
-//' @examples
-// [[Rcpp::depends(RcppArmadillo)]]
+//' @export
 // [[Rcpp::export]]
 arma::rowvec rwCentrality(arma::mat A,
                           bool verbose = false) {

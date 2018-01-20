@@ -4,8 +4,9 @@
 #'
 #' @docType package
 #' @author Oliver Reiter
+#' @useDynLib riot
 #' @import Rcpp data.table
 #' @importFrom Rcpp evalCpp
-#' @useDynLib riot
+#' @exportPattern "^[[:alpha:]]+"
 #' @name riot
 NULL

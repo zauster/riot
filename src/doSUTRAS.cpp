@@ -3,10 +3,12 @@
 #include "helperFunctions.h"
 
 using namespace Rcpp;
+// [[Rcpp::depends(RcppArmadillo)]]
 
 //' Do the SUTRAS algorithm for updating supply and use tables
 //'
-//' This function calculates an updated supply and (domestic and import) use table (SUTs), based on a given SUT and national accounts data.
+//' This function calculates an updated supply and (domestic and import) use
+//' table (SUTs), based on a given SUT and national accounts data.
 //' @param V the supply (make) matrix
 //' @param Ud the domestic use matrix
 //' @param Um the import use matrix
@@ -21,10 +23,16 @@ using namespace Rcpp;
 //'     displayed? Default is FALSE
 //' @return the updated SUTs, a list
 //' @author Oliver Reiter
-//' @references
+//' @references Temurshoev, U., & Timmer, M. P. (2011). Joint estimation of supply and use tables. Papers in Regional Science, 90(4), 863-882.
 //' @keywords SUTRAS, input-output updating
 //' @examples
-// [[Rcpp::depends(RcppArmadillo)]]
+//' data(TestSUTs_AUT2010)
+//' data(TestNA_AUT2011)
+//' c <- rep(0, length(m0))
+//' res <- doSUTRAS(V = V, Ud = Ud, Um = Um, m0 = m0, u_bar = ubar,
+//'                 x_bar = xbar, M = M, c = c, epsilon = 1e-10,
+//'                 maxiter = 100, verbose = FALSE)
+//' @export
 // [[Rcpp::export]]
 Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
                     arma::mat Um, arma::vec m0,

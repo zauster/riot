@@ -1,16 +1,18 @@
 #include "RcppArmadillo.h"
 #include "helperFunctions.h"
 
+// [[Rcpp::depends(RcppArmadillo)]]
+
 //' Do the GRAS algorithm for updating matrizes
 //'
 //' This function calculates an updated matrix X, based on a matrix A,
 //' which meets the given row and columns totals. Note: A can contain
 //' negative elements.
 //' @param A the "base" matrix
-//' @param u vector with the row totals
-//' @param v vector with the column totals
+//' @param u column vector with the row totals
+//' @param v row vector with the column totals
 //' @param epsilon the error tolerance level, default is 1e-10.
-//' @param max.iter maximum number of iterations, default is 10000.
+//' @param maxiter maximum number of iterations, default is 10000.
 //' @param verbose should some information of the iterations be
 //'     displayed? Default is FALSE
 //' @return the updated matrix X
@@ -32,7 +34,7 @@
 //' u <- c(15, 26, -1)
 //' v <- c(9, 16, 17, -2)
 //' doGRAS(A, u, v)
-// [[Rcpp::depends(RcppArmadillo)]]
+//' @export
 // [[Rcpp::export]]
 arma::mat doGRAS(arma::mat A,
                       arma::colvec u,
