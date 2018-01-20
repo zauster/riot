@@ -95,7 +95,7 @@ ShermanUpdateCol <- function(A, u, i) {
 #' Update the inverse by row
 #'
 #' @param A an inverse of a matrix to be updated
-#' @param u row vector
+#' @param v row vector
 #' @param i column index
 ShermanUpdateRow <- function(A, v, i) {
     invisible(.Call('_riot_ShermanUpdateRow', PACKAGE = 'riot', A, v, i))

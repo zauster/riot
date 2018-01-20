@@ -9,9 +9,9 @@ ShermanUpdateRow(A, v, i)
 \arguments{
 \item{A}{an inverse of a matrix to be updated}
 
-\item{i}{column index}
+\item{v}{row vector}
 
-\item{u}{row vector}
+\item{i}{column index}
 }
 \description{
 Update the inverse by row
