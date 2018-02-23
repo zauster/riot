@@ -71,7 +71,7 @@ arma::mat doGRAS(arma::mat A,
 
   double error = 1;
   int iter = 1;
-  int errorpos;
+  int errorpos = -1;
 
   do {
     s_old = s;

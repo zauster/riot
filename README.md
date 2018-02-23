@@ -38,6 +38,10 @@ To Do
 -----
 
 1. [x] fix DOCUMENTATION!
-1. [ ] class system for SUTs and/or IO, preferably using the R6 class system
+1. [ ] class system for SUTs (own class for supply/use tables?) and/or IO, preferably using the R6 class system
+1. [ ] getter/setter methods for data points
 1. [ ] compute IO table from supply and use tables
 1. [ ] replace missings in sut tables
+1. [ ] adjust rows/cols in SUT before SUTRASing, eg, adjust exports/imports according to some external data
+1. [ ] doGRAS.long tests (in general more tests)
+1. [ ] Decomposing bilateral flows accordings to WWZ in RcppArmadillo

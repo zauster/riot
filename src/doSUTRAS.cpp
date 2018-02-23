@@ -121,7 +121,7 @@ Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
     } //else if(iter %% 50 == ) {}
 
     iter++;
-  } while ((rd_test | rm_test) & iter < maxiter);
+  } while ((rd_test | rm_test) & (iter < maxiter));
 
 
   // apply the multiplicators, update the matrizes. We save the results in
@@ -152,12 +152,12 @@ Rcpp::List doSUTRAS(arma::mat V, arma::mat Ud,
   // Import vector
   m0 = r * (m0 % sinvc(rm));
 
-  // test if the column sums are equal to the specified values (ie ubar, xbar
-  // and M)
+  // test if the column sums are equal to the specified values (ie
+  // ubar, xbar and M)
   rv = abs(sum(Pv0, 0) - x_bar);
   su = abs(sum(Pd0, 0) + sum(Pm0, 0) - u_bar);
   r = sum(m0) - M;
-  if(any(rv > epsilon) | any(su > epsilon) | r > epsilon) {
+  if(any(rv > epsilon) | any(su > epsilon) | (r > epsilon)) {
     Rcout << "  M: " << r << std::endl;
     Rcout << "  xbar diff: " << rv << std::endl;
     Rcout << "  ubar diff: " << su << std::endl;

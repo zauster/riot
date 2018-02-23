@@ -55,7 +55,8 @@ arma::uvec index_noti(int i, int nm1) {
 //' @export
 // [[Rcpp::export]]
 arma::rowvec rwCentrality(arma::mat A,
-                          bool verbose = false) {
+                          bool verbose = false
+                          bool forceInverse = false) {
 
   int n = A.n_rows;
   int nm1 = A.n_rows - 1; // nm1 = n minus 1
@@ -101,7 +102,7 @@ arma::rowvec rwCentrality(arma::mat A,
 
       // if some elements are not finite after the updates,
       // calculate a new inverse from scratch
-      if(!IMinv.is_finite()) {
+      if(!IMinv.is_finite() or forceInverse) {
         Rcout << "Calc new IMinv\n" << IMinv << std::endl;
         IMinv = A.submat(index_noti(i + 1, nm1), index_noti(i + 1, nm1)).i();
       }
