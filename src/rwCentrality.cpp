@@ -55,7 +55,7 @@ arma::uvec index_noti(int i, int nm1) {
 //' @export
 // [[Rcpp::export]]
 arma::rowvec rwCentrality(arma::mat A,
-                          bool verbose = false
+                          bool verbose = false,
                           bool forceInverse = false) {
 
   int n = A.n_rows;
