@@ -2,7 +2,7 @@ riot
 =======
 
 **Development of this package moved to
-(Gitlab)[https://gitlab.com/zauster/riot], this repository is not
+[Gitlab](https://gitlab.com/zauster/riot), this repository is not
 updated regularly (if at all).**
 
 Installation
