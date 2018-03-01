@@ -1,8 +1,9 @@
-
 riot
 =======
-[![Travis-CI Build Status](https://travis-ci.org/zauster/riot.png?branch=master)](https://travis-ci.org/zauster/riot)
-[![codecov](https://codecov.io/gh/zauster/riot/branch/master/graph/badge.svg)](https://codecov.io/gh/zauster/riot)
+
+**Development of this package moved to
+(Gitlab)[https://gitlab.com/zauster/riot], this repository is not
+updated regularly (if at all).**
 
 Installation
 ------------
